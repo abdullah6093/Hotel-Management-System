@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen & Menu Management</title>
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Hotel CMS</h2>
+
+        <!-- Dashboard -->
+        <a href="index.html" class="menu-item ">
+            <i class="fas fa-home"></i> Dashboard
+        </a>
+
+        <!-- Room Management -->
+        <a href="Room_Management.html" class="menu-item">
+            <i class="fas fa-bed"></i> Room Management
+        </a>
+
+        <!-- Booking Management -->
+        <a href="Booking_Management.html" class="menu-item">
+            <i class="fas fa-calendar-check"></i> Bookings
+        </a>
+
+        <!-- Staff & HR -->
+        <a href="Staff_&_HR_Management.html" class="menu-item">
+            <i class="fas fa-users"></i> Staff & HR
+        </a>
+
+        <!-- Kitchen & Menu -->
+        <a href="Kitchen_&_Menu_Management.html" class="menu-item active">
+            <i class="fas fa-utensils"></i> Kitchen / Menu
+        </a>
+
+        <!-- Payments & Billing -->
+        <a href="Payments_&_Billing.html" class="menu-item">
+            <i class="fas fa-file-invoice-dollar"></i> Payments
+        </a>
+    </div>
+
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Kitchen & Room Service</h1>
+            <button class="btn-add"><i class="fas fa-plus"></i> Add Menu Item</button>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active">Incoming Orders</button>
+            <button class="tab-btn">Menu Catalog</button>
+        </div>
+
+        <div class="table-container" style="margin-bottom: 40px; background: transparent; box-shadow: none; padding: 0;">
+            <h3 style="margin-bottom: 15px; color: #2c3e50;">Pending Tickets</h3>
+            
+            <div class="order-ticket">
+                <div class="ticket-info">
+                    <h4>Room 103 <span style="font-size: 14px; color: #f39c12; font-weight: normal;">(Waiting...)</span></h4>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> 2x Club Sandwich</li>
+                        <li><i class="fas fa-circle"></i> 1x Fresh Orange Juice</li>
+                    </ul>
+                </div>
+                <div>
+                    <button class="btn-add" style="background-color: #27ae60; font-size: 13px;">
+                        <i class="fas fa-check"></i> Mark Done
+                    </button>
+                </div>
+            </div>
+
+            <div class="order-ticket">
+                <div class="ticket-info">
+                    <h4>Room 101 <span style="font-size: 14px; color: #f39c12; font-weight: normal;">(Waiting...)</span></h4>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> 1x Cheese Burger</li>
+                        <li><i class="fas fa-circle"></i> 1x French Fries (Large)</li>
+                        <li><i class="fas fa-circle"></i> 1x Coke Zero</li>
+                    </ul>
+                </div>
+                <div>
+                    <button class="btn-add" style="background-color: #27ae60; font-size: 13px;">
+                        <i class="fas fa-check"></i> Mark Done
+                    </button>
+                </div>
+            </div>
+
+             <div class="order-ticket completed">
+                <div class="ticket-info">
+                    <h4>Room 205 <span style="font-size: 14px; color: #27ae60; font-weight: normal;">(Delivered)</span></h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 1x Black Coffee</li>
+                    </ul>
+                </div>
+                <div>
+                    <span style="color: #27ae60; font-weight: bold; font-size: 14px;">Served 10m ago</span>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="section-title">Current Menu Items</h3>
+        <div class="menu-grid">
+            
+            <div class="menu-item-card">
+                <div class="item-img"><i class="fas fa-hamburger"></i></div>
+                <div class="item-details">
+                    <h4>Club Sandwich</h4>
+                    <span class="price">$12.00</span>
+                    <a href="#" style="color: #3498db; font-size: 12px; text-decoration: none;">Edit Price</a>
+                </div>
+            </div>
+
+            <div class="menu-item-card">
+                <div class="item-img"><i class="fas fa-coffee"></i></div>
+                <div class="item-details">
+                    <h4>Black Coffee</h4>
+                    <span class="price">$4.50</span>
+                    <a href="#" style="color: #3498db; font-size: 12px; text-decoration: none;">Edit Price</a>
+                </div>
+            </div>
+
+            <div class="menu-item-card">
+                <div class="item-img"><i class="fas fa-pizza-slice"></i></div>
+                <div class="item-details">
+                    <h4>Cheese Pizza</h4>
+                    <span class="price">$15.00</span>
+                    <a href="#" style="color: #3498db; font-size: 12px; text-decoration: none;">Edit Price</a>
+                </div>
+            </div>
+
+            <div class="menu-item-card">
+                <div class="item-img"><i class="fas fa-ice-cream"></i></div>
+                <div class="item-details">
+                    <h4>Vanilla Scoop</h4>
+                    <span class="price">$6.00</span>
+                    <a href="#" style="color: #3498db; font-size: 12px; text-decoration: none;">Edit Price</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

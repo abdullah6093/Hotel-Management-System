@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel CMS - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2>Hotel CMS</h2>
+
+        <!-- Dashboard -->
+        <a href="index.html" class="menu-item active">
+            <i class="fas fa-home"></i> Dashboard
+        </a>
+
+        <!-- Room Management -->
+        <a href="Room_Management.html" class="menu-item">
+            <i class="fas fa-bed"></i> Room Management
+        </a>
+
+        <!-- Booking Management -->
+        <a href="Booking_Management.html" class="menu-item">
+            <i class="fas fa-calendar-check"></i> Bookings
+        </a>
+
+        <!-- Staff & HR -->
+        <a href="Staff_&_HR_Management.html" class="menu-item">
+            <i class="fas fa-users"></i> Staff & HR
+        </a>
+
+        <!-- Kitchen & Menu -->
+        <a href="Kitchen_&_Menu_Management.html" class="menu-item">
+            <i class="fas fa-utensils"></i> Kitchen / Menu
+        </a>
+
+        <!-- Payments & Billing -->
+        <a href="Payments_&_Billing.html" class="menu-item">
+            <i class="fas fa-file-invoice-dollar"></i> Payments
+        </a>
+    </div>
+
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Overview</h1>
+            <div>
+                <span>Welcome, <strong>Admin</strong></span>
+                <i class="fas fa-user-circle fa-lg" style="margin-left: 10px;"></i>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="card">
+                <div class="card-info">
+                    <h3>12</h3>
+                    <p>Rooms Available</p>
+                </div>
+                <div class="card-icon"><i class="fas fa-key"></i></div>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>45</h3>
+                    <p>Active Bookings</p>
+                </div>
+                <div class="card-icon"><i class="fas fa-suitcase"></i></div>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>8</h3>
+                    <p>Staff on Shift</p>
+                </div>
+                <div class="card-icon"><i class="fas fa-user-clock"></i></div>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>$1,250</h3>
+                    <p>Today's Revenue</p>
+                </div>
+                <div class="card-icon"><i class="fas fa-dollar-sign"></i></div>
+            </div>
+        </div>
+
+        <h3 class="section-title">Live Room Status</h3>
+        <div class="room-grid">
+            <div class="room-box status-booked">101<br><small>Occupied</small></div>
+            <div class="room-box status-available">102<br><small>Free</small></div>
+            <div class="room-box status-cleaning">103<br><small>Maid</small></div>
+            <div class="room-box status-booked">104<br><small>Occupied</small></div>
+            <div class="room-box status-available">105<br><small>Free</small></div>
+            <div class="room-box status-available">106<br><small>Free</small></div>
+        </div>
+
+        <h3 class="section-title">Recent Bookings</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Guest Name</th>
+                        <th>Room Type</th>
+                        <th>Check-In</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#5023</td>
+                        <td>John Doe</td>
+                        <td>Suite</td>
+                        <td>2023-11-15</td>
+                        <td><span class="status-badge badge-green">Confirmed</span></td>
+                    </tr>
+                    <tr>
+                        <td>#5022</td>
+                        <td>Jane Smith</td>
+                        <td>Double</td>
+                        <td>2023-11-14</td>
+                        <td><span class="status-badge badge-green">Confirmed</span></td>
+                    </tr>
+                    <tr>
+                        <td>#5021</td>
+                        <td>Mike Ross</td>
+                        <td>Single</td>
+                        <td>2023-11-10</td>
+                        <td><span class="status-badge badge-red">Checked Out</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>
