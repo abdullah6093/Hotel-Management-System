@@ -3,28 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Grand Hotel CMS</title>
+    <title>Welcome to Quetta Hotel CMS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/welcomepage__styles.css">
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/welcomepage__styles.css') }}">
 </head>
 <body>
 
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="alert {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
     <nav class="navbar">
         <div class="logo">
-            <i class="fas fa-hotel"></i> Grand Hotel
+            <i class="fas fa-hotel"></i> Quetta Hotel
         </div>
         <div class="nav-links">
-            <a href="#home">Home</a>
+            <a href="{{ url_for('home') }}">Home</a>
             <a href="#features">Services</a>
             <a href="#complaints">Contact</a>
-            
-            <a href="login.php" class="btn-admin">
+
+            <a href="{{ url_for('admin_login') }}" class="btn-admin">
                 <i class="fas fa-user-shield"></i> Login as Admin
             </a>
 
-            <a href="guest_booking.php" class="btn-book">
-                <i class="fas fa-calendar-check"></i> Book a Room
+            <a href="{{ url_for('guest_booking') }}" class="btn-book">
+                <i class="fas fa-calendar-check"></i> Login as Customer
             </a>
         </div>
     </nav>
@@ -32,14 +42,14 @@
     <section id="home" class="hero">
         <h1>Experience Luxury Like Never Before</h1>
         <p>From world-class suites to exquisite dining, we provide an unforgettable experience for our guests.</p>
-        
-        <a href="guest_booking.php" class="hero-btn">Start Your Reservation</a>
+
+        <a href="{{ url_for('guest_booking') }}" class="hero-btn">Start Your Reservation</a>
     </section>
 
     <section id="features" class="features">
         <h2 class="section-title">Why Stay With Us?</h2>
         <p style="color: #7f8c8d; margin-bottom: 30px;">We offer the best services in the city.</p>
-        
+
         <div class="features-grid">
             <div class="feature-box">
                 <i class="fas fa-swimming-pool"></i>
@@ -70,7 +80,7 @@
             <p>Have a complaint or suggestion? Let us know directly.</p>
 
             <div class="form-box">
-                <form action="index.php" method="POST">
+                <form action="{{ url_for('submit_complaint') }}" method="POST">
                     <div class="form-group">
                         <label>Your Name</label>
                         <input type="text" name="guest_name" placeholder="John Doe" required>
@@ -83,7 +93,7 @@
                         <label>Complaint / Message</label>
                         <textarea name="message" rows="5" placeholder="Describe your issue or suggestion..." required></textarea>
                     </div>
-                    <button type="submit" name="submit_complaint" class="btn-submit">Submit Complaint</button>
+                    <button type="submit" class="btn-submit">Submit Complaint</button>
                 </form>
             </div>
         </div>
@@ -91,6 +101,7 @@
 
     <footer>
         <p>&copy; 2025 Hotel CMS Project. All Rights Reserved.</p>
+        <p>Helpline: 000-111-222-555</p>
     </footer>
 
 </body>

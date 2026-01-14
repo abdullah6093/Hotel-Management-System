@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Bookings | Quetta Hotel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/book_your_stay__styles.css') }}">
+</head>
+
+<body class="guest-page">
+
+    <nav class="guest-nav">
+        <div class="guest-logo">
+            <i class="fas fa-hotel"></i> Hotel CMS
+        </div>
+
+        <div class="guest-menu">
+            <a href="{{ url_for('book_your_stay') }}">Back to Rooms</a>
+            <a href="{{ url_for('logout') }}" style="color:red;">Logout</a>
+        </div>
+    </nav>
+
+    <h2 style="text-align:center; margin-top:40px;">My Booking Details</h2>
+
+    {% if bookings %}
+    <div class="guest-container" style="max-width:900px; margin:auto;">
+
+        {% for booking in bookings %}
+        <div class="guest-card" style="margin-bottom:20px; padding:20px;">
+
+            <h3>{{ booking.type_name }}</h3>
+
+            <p><strong>Room Number:</strong> {{ booking.room_number }}</p>
+            <p><strong>Check-in:</strong> {{ booking.check_in_date }}</p>
+            <p><strong>Check-out:</strong> {{ booking.check_out_date }}</p>
+            <p><strong>Status:</strong> {{ booking.booking_status }}</p>
+            <p><strong>Amount: :</strong> {{ booking.room_total }}</p>
+            <!-- ================= ROOM SERVICE ITEMS ================= -->
+            {% if booking.ordered_items %}
+                <hr>
+                <h4>Room Service Orders</h4>
+
+                <ul style="margin-left:20px;">
+                    {% for item in booking.ordered_items %}
+                        <li>
+                            {{ item.item_name }}
+                            × {{ item.quantity }}
+                            — Rs. {{ item.subtotal }}
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <p style="margin-top:10px;">
+                    <strong>Room Service Total:</strong>
+                    Rs. {{ booking.service_total }}
+                </p>
+            {% else %}
+                <p style="margin-top:10px; color:#777;">
+                    No room service orders.
+                </p>
+            {% endif %}
+
+            <hr>
+
+            <!-- ================= FINAL TOTAL ================= -->
+            <p style="font-size:16px; font-weight:bold;">
+                Total Amount (Room + Services):
+                Rs. {{ booking.final_total }}
+            </p>
+
+        </div>
+        {% endfor %}
+
+    </div>
+    {% else %}
+        <p style="text-align:center; margin-top:50px;">No bookings found.</p>
+    {% endif %}
+    <footer class="guest-footer">
+        <p>&copy; 2025 Quetta Hotel. All rights reserved.</p>
+        <p>Helpline: 000-111-222-555</p>
+    </footer>
+</body>
+</html>

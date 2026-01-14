@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Management</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>Quetta Hotel</h2>
+    <a href="{{ url_for('index') }}" class="menu-item"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="{{ url_for('room_management') }}" class="menu-item"><i class="fas fa-bed"></i> Room Management</a>
+    <a href="{{ url_for('booking_management') }}" class="menu-item"><i class="fas fa-calendar-check"></i> Bookings</a>
+    <a href="{{ url_for('kitchen_menu') }}" class="menu-item "><i class="fas fa-utensils"></i> Kitchen / Menu</a>
+    <a href="{{ url_for('payments') }}" class="menu-item">
+        <i class="fas fa-file-invoice-dollar"></i> Payments & Complaints
+    </a>
+</div>
+
+<div class="main-content">
+
+    <div class="header">
+        <h1>Room Management</h1>
+        <div>
+            <span>{{ admin_name }}</span>
+            <i class="fas fa-user-circle fa-lg" style="margin-left: 10px;"></i>
+        </div>
+    </div>
+
+    <!-- FLASH -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <p style="color:green;">{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- ADD ROOM FORM -->
+    <div class="form-container">
+        <h3 style="margin-bottom: 15px;">Add New Room</h3>
+
+        <form method="POST" action="{{ url_for('add_room') }}">
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>Room Number</label>
+                    <input type="text" name="room_number" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Room Type</label>
+                    <select name="type_name" required>
+                        <option value="Single">Single</option>
+                        <option value="Double">Double</option>
+                        <option value="Suite">Suite</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" name="description" placeholder="Optional">
+                </div>
+
+                <div class="form-group">
+                    <label>Price Per Night (PKR)</label>
+                    <input type="number" step="0.01" name="base_price_per_night" required>
+                </div>
+
+                <button type="submit" class="btn-add">
+                    <i class="fas fa-plus"></i> Add Room
+                </button>
+
+            </div>
+        </form>
+    </div>
+
+    <!-- ROOMS TABLE -->
+    <div class="table-container">
+        <h3>Current Rooms</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Room #</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for room in rooms %}
+                <tr>
+                    <td><strong>{{ room.room_number }}</strong></td>
+                    <td>{{ room.type_name }}</td>
+                    <td>PKR {{ room.base_price_per_night }}</td>
+                    <td>
+                        <span class="status-badge
+                            {% if room.status == 'Available' %}badge-green{% else %}badge-red{% endif %}">
+                            {{ room.status }}
+                        </span>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" style="text-align:center;">No rooms found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

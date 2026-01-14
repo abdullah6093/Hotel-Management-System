@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Booking | Quetta Hotel</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/book_your_stay__styles.css') }}">
+</head>
+
+<body class="guest-page">
+
+    <nav class="guest-nav">
+        <div class="guest-logo"><i class="fas fa-hotel"></i> Hotel CMS</div>
+
+        <div class="guest-menu">
+            <a href="{{ url_for('book_your_stay') }}">Back to Rooms</a>
+            <a href="{{ url_for('current_bookings') }}">My Bookings</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="guest-container" style="margin-top: 50px; text-align: center;">
+
+        <h2>Confirm Your Booking</h2>
+
+        <div class="guest-card" style="margin: 20px auto; max-width: 500px; padding: 20px; border-radius: 10px;">
+
+            <h3>{{ room.type_name }}</h3>
+            <p>Price per Night: PKR {{ room.base_price_per_night }}</p>
+
+            <form method="POST" action="{{ url_for('process_booking', room_id=room.room_id) }}">
+
+                <div style="margin-bottom: 15px;">
+                    <label>Check-In Date:</label><br>
+                    <input type="date" name="check_in" required>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label>Check-Out Date:</label><br>
+                    <input type="date" name="check_out" required>
+                </div>
+
+                <button type="submit" class="btn-check">
+                    Confirm Booking
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+    <footer class="guest-footer">
+        <p>&copy; 2025 Quetta Hotel. All rights reserved.</p>
+        <p>Helpline: 000-111-222-555</p>
+    </footer>
+</body>
+</html>

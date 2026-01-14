@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Stay | Quetta Hotel</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/book_your_stay__styles.css') }}">
+</head>
+
+<body class="guest-page">
+
+    <!-- NAVBAR -->
+    <nav class="guest-nav">
+        <div class="guest-logo"><i class="fas fa-hotel"></i> Quetta Hotel</div>
+
+        <div class="guest-menu">
+            <a href="{{ url_for('current_bookings') }}" class="btn-my-booking">
+                My Bookings & Orders
+            </a>
+            <a href="{{ url_for('logout') }}" class="btn-logout">
+                Logout
+            </a>
+        </div>
+    </nav>
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div style="text-align:center; margin-top:15px;">
+          {% for category, message in messages %}
+            <p style="color:green;">{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- HERO SECTION -->
+    <header class="guest-hero">
+        <div>
+            <h1>Experience Luxury</h1>
+            <p>Your perfect getaway starts here. Book your room today.</p>
+        </div>
+    </header>
+
+    <!-- ROOM LIST -->
+    <div class="guest-container" id="rooms">
+
+        <h2 style="text-align: center; margin-bottom: 30px; color: #2c3e50;">
+            Select Your Room
+        </h2>
+
+        <div class="guest-room-grid">
+
+            {% if rooms %}
+                {% for room in rooms %}
+                <div class="guest-card">
+                    <div class="guest-card-content">
+                        <h3>{{ room.type_name }}</h3>
+
+                        <span class="guest-price">
+                            PKR {{ room.base_price_per_night }}
+                            <small>/ night</small>
+                        </span>
+
+                        <ul class="guest-features">
+                            <li><i class="fas fa-wifi"></i> Free Wifi</li>
+                            <li><i class="fas fa-bed"></i> Comfortable Bed</li>
+                            <li><i class="fas fa-bath"></i> Attached Bathroom</li>
+                            <li>{{room.description}}</li>
+                        </ul>
+
+                        <a href="{{ url_for('confirm_booking', room_id=room.room_id) }}">
+                            <button class="btn-select-room">Select This Room</button>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="text-align:center; color:red; font-size:20px;">
+                    No rooms available at the moment.
+                </p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <footer class="guest-footer">
+        <p>&copy; 2025 Quetta Hotel. All rights reserved.</p>
+        <p>Helpline: 000-111-222-555</p>
+    </footer>
+
+</body>
+</html>

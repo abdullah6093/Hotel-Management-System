@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel CMS - Login</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <title>Quetta Hotel - Admin Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="login-body">
 
     <div class="login-container">
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-container">
+              {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
         <div class="logo-area">
             <i class="fas fa-hotel"></i>
             <h2>Hotel Admin</h2>
             <p style="color: #95a5a6; margin-top: 5px;">Sign in to manage operations</p>
         </div>
 
-        <form action="dashboard.html">
-            
+        <form action="{{ url_for('admin_login') }}" method="POST">
             <div class="input-group">
                 <label>Username / ID</label>
                 <div class="input-wrapper">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="admin" required>
+                    <input type="text" name="username" placeholder="admin" required>
                 </div>
             </div>
 
@@ -30,7 +39,7 @@
                 <label>Password</label>
                 <div class="input-wrapper">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="••••••" required>
+                    <input type="password" name="password" placeholder="••••••" required>
                 </div>
             </div>
 

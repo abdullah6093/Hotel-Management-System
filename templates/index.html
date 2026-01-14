@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quetta Hotel - Admin Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>Hotel CMS</h2>
+    <a href="{{ url_for('index') }}" class="menu-item"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="{{ url_for('room_management') }}" class="menu-item"><i class="fas fa-bed"></i> Room Management</a>
+    <a href="{{ url_for('booking_management') }}" class="menu-item"><i class="fas fa-calendar-check"></i> Bookings</a>
+    <a href="{{ url_for('kitchen_menu') }}" class="menu-item"><i class="fas fa-utensils"></i> Kitchen / Menu</a>
+    <a href="{{ url_for('payments') }}" class="menu-item">
+        <i class="fas fa-file-invoice-dollar"></i> Payments & Complaints
+    </a>
+</div>
+
+<div class="main-content">
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">
+                        {{ message }}
+                        <span class="flash-close" onclick="this.parentElement.style.display='none';">&times;</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="header">
+        <h1>Overview</h1>
+        <div>
+            <span>Welcome, <strong>{{ admin_name }}</strong></span>
+            <i class="fas fa-user-circle fa-lg" style="margin-left: 10px;"></i>
+             <a href="{{ url_for('logout') }}" class="btn-logout">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+
+        <div class="card">
+            <div class="card-info">
+                <h3>{{ rooms_available }}</h3>
+                <p>Rooms Available</p>
+            </div>
+            <div class="card-icon"><i class="fas fa-key"></i></div>
+        </div>
+
+        <div class="card">
+            <div class="card-info">
+                <h3>{{ active_bookings }}</h3>
+                <p>Active Bookings</p>
+            </div>
+            <div class="card-icon"><i class="fas fa-suitcase"></i></div>
+        </div>
+
+        <div class="card">
+            <div class="card-info">
+                <h3>PKR {{ todays_revenue }}</h3>
+                <p>Today's Revenue</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- RECENT BOOKINGS -->
+    <h3 class="section-title">Recent Bookings</h3>
+
+<div class="table-container">
+    <table>
+<thead>
+    <tr>
+        <th>Booking ID</th>
+        <th>Guest Name</th>
+        <th>Room Type</th>
+        <th>Check-In</th>
+        <th>Check-Out</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+</thead>
+<tbody>
+
+{% if recent_bookings %}
+    {% for booking in recent_bookings %}
+    <tr>
+        <td>#{{ booking.booking_id }}</td>
+        <td>{{ booking.guest_name }}</td>
+        <td>{{ booking.type_name }}</td>
+        <td>{{ booking.check_in_date }}</td>
+        <td>{{ booking.check_out_date }}</td>
+        <td>
+            <span class="status-badge
+                {% if booking.booking_status == 'Confirmed' %}badge-green
+                {% elif booking.booking_status == 'Pending' %}badge-yellow
+                {% else %}badge-red{% endif %}">
+                {{ booking.booking_status }}
+            </span>
+        </td>
+
+        <td>
+    {% if booking.booking_status == 'Pending' %}
+        <form method="POST"
+              action="{{ url_for('verify_booking', booking_id=booking.booking_id) }}">
+            <button type="submit" class="btn-verify">
+                Verify Booking
+            </button>
+        </form>
+    {% elif booking.booking_status == 'Confirmed' %}
+        <form method="POST"
+              action="{{ url_for('cancel_booking', booking_id=booking.booking_id) }}">
+            <button type="submit" class="btn-cancel">
+                Cancel Booking
+            </button>
+        </form>
+    {% else %}
+        —
+    {% endif %}
+</td>
+
+    </tr>
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="7" style="text-align:center;">No bookings found</td>
+    </tr>
+{% endif %}
+</tbody>
+
+    </table>
+</div>
+
+</div>
+
+</body>
+</html>

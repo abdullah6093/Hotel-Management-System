@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice #INV-{{ booking.booking_id }}</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body style="background-color: #525659;">
+<div class="invoice-container">
+
+    <div class="invoice-header">
+        <div>
+            <h1><i class="fas fa-hotel"></i> Quetta Hotel</h1>
+            <p>H-12, Opposite to NUST, GATE-2.</p>
+            <p>Phone: 000-111-222-555</p>
+        </div>
+        <div class="invoice-details">
+            <h3>INVOICE</h3>
+            <p><strong>#INV-{{ booking.booking_id }}</strong></p>
+            <p>Date: {{ today }}</p>
+        </div>
+    </div>
+
+    <div class="guest-info">
+        <div class="info-col">
+            <h4>Bill To:</h4>
+            <p><strong>{{ booking.customer_name }}</strong></p>
+            <p>{{ booking.address }}</p>
+            <p>{{ booking.email }}</p>
+        </div>
+        <div class="info-col" style="text-align: right;">
+            <h4>Booking Details:</h4>
+            <p>Room: <strong>{{ booking.room_number }} ({{ booking.room_type }})</strong></p>
+            <p>Check-In: {{ booking.check_in_date }}</p>
+            <p>Check-Out: {{ booking.check_out_date }}</p>
+        </div>
+    </div>
+
+    <table class="invoice-table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th class="text-right">Unit Price</th>
+                <th class="text-right">Qty / Nights</th>
+                <th class="text-right">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Room Charge ({{ booking.room_type }})</td>
+                <td class="text-right">Rs {{ "%.2f"|format(booking.total_amount) }}</td>
+                <td class="text-right">
+                    {{ (booking.check_out_date - booking.check_in_date).days }}
+                </td>
+                <td class="text-right">Rs {{ "%.2f"|format(booking.total_amount) }}</td>
+            </tr>
+            {% for s in services %}
+            <tr>
+                <td>Room Service: {{ s.item_name }}</td>
+                <td class="text-right">Rs {{ "%.2f"|format(s.item_price) }}</td>
+                <td class="text-right">{{ s.quantity }}</td>
+                <td class="text-right">Rs {{ "%.2f"|format(s.subtotal) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="invoice-total">
+        <p>Subtotal: Rs {{ "%.2f"|format(subtotal) }}</p>
+        <p>Tax (10%): Rs {{ "%.2f"|format(tax) }}</p>
+        <div class="grand-total">Total Due: Rs {{ "%.2f"|format(total_due) }}</div>
+    </div>
+
+    <div class="print-area">
+        <p style="margin-bottom: 10px; color: #7f8c8d;">Thank you for staying with us!</p>
+        <button onclick="window.print()" class="btn-print-large">
+            <i class="fas fa-print"></i> Print Invoice
+        </button>
+    </div>
+
+</div>
+</body>
+</html>

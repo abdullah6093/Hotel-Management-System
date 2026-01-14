@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kitchen & Menu Management</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+<div class="sidebar">
+    <h2>Quetta Hotel</h2>
+    <a href="{{ url_for('index') }}" class="menu-item"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="{{ url_for('room_management') }}" class="menu-item"><i class="fas fa-bed"></i> Room Management</a>
+    <a href="{{ url_for('booking_management') }}" class="menu-item"><i class="fas fa-calendar-check"></i> Bookings</a>
+    <a href="{{ url_for('kitchen_menu') }}" class="menu-item active"><i class="fas fa-utensils"></i> Kitchen / Menu</a>
+    <a href="{{ url_for('payments') }}" class="menu-item">
+        <i class="fas fa-file-invoice-dollar"></i> Payments & Complaints
+    </a>
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+<div class="main-content">
+
+    <div class="header">
+        <h1>Room Management</h1>
+        <div>
+            <span>{{ admin_name }}</span>
+            <i class="fas fa-user-circle fa-lg" style="margin-left: 10px;"></i>
+        </div>
+    </div>
+
+    <!-- ================= FLASH MESSAGES ================= -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- ================= ADD MENU ITEM ================= -->
+    <div class="form-container">
+        <h3>Add Menu Item</h3>
+
+        <form method="POST" action="{{ url_for('add_menu_item') }}">
+            <div class="booking-form-grid">
+
+                <div class="form-group">
+                    <label>Item Name</label>
+                    <input type="text" name="item_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" step="0.01" name="item_price" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" name="category">
+                </div>
+
+                <div class="full-width">
+                    <button class="btn-add">
+                        <i class="fas fa-plus"></i> Add Item
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <!-- ================= MENU ITEM CARDS ================= -->
+    <div class="menu-grid">
+        {% for item in menu_items %}
+        <div class="menu-item-card">
+            <div class="item-img"><i class="fas fa-utensils"></i></div>
+            <div class="item-details">
+                <h4>{{ item.item_name }}</h4>
+                <span class="price">PKR {{ item.item_price }}</span>
+                <span class="category">{{ item.category }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- ================= CREATE ROOM SERVICE ORDER ================= -->
+    <div class="form-container">
+        <h3>Create Room Service Order</h3>
+
+        <form method="POST" action="{{ url_for('create_room_service_order') }}">
+            <div class="booking-form-grid">
+
+                <div class="form-group">
+                    <label>Booking ID</label>
+                    <input type="number" name="booking_id" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Item</label>
+                    <select name="item_id" required>
+                        {% for item in menu_items %}
+                        <option value="{{ item.item_id }}">
+                            {{ item.item_name }} - PKR {{ item.item_price }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" name="quantity" min="1" required>
+                </div>
+
+                <div class="full-width">
+                    <button class="btn-add">
+                        <i class="fas fa-check"></i> Place Order
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <!-- ================= ORDERS LIST ================= -->
+    <div class="table-container">
+        <h3>Room Service Orders</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Booking ID</th>
+                    <th>Customer</th>
+                    <th>Room #</th>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Subtotal</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% if orders %}
+                {% for order in orders %}
+                <tr>
+                    <td>#{{ order.order_id }}</td>
+                    <td>#{{ order.booking_id }}</td>
+                    <td>{{ order.customer_name }}</td>
+                    <td>{{ order.room_number }}</td>
+                    <td>{{ order.item_name }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>PKR {{ order.subtotal }}</td>
+                    <td>{{ order.order_datetime }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="8" style="text-align:center;">
+                        No orders placed yet
+                    </td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

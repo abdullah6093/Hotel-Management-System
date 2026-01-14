@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quetta Hotel - Customer Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="login-body">
+
+<div class="login-container">
+    <div class="logo-area">
+        <i class="fas fa-hotel"></i>
+        <h2>Customer Login</h2>
+        <p style="color: #95a5a6; margin-top: 5px;">Sign in to book your room</p>
+    </div>
+
+    <!-- Flash Messages -->
+    <div class="flash-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+
+    <form action="{{ url_for('customer_login') }}" method="POST">
+        <div class="input-group">
+            <label>Email</label>
+            <div class="input-wrapper">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="email" placeholder="john@example.com" required>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <div class="input-wrapper">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="••••••" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-login">LOGIN</button>
+    </form>
+
+    <p style="margin-top: 15px;">Don't have an account? <a href="{{ url_for('customer_register') }}">Register here</a></p>
+</div>
+
+</body>
+</html>
